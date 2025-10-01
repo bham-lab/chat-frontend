@@ -10,7 +10,7 @@ export default function Login({ setCurrentUser }) {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:8000/api/auth/login/", {
+      const res = await fetch("https://chat-backend-6f9b.onrender.com/api/auth/login/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
@@ -42,18 +42,18 @@ export default function Login({ setCurrentUser }) {
     <div className="flex items-center justify-center h-screen bg-gray-100">
       <form
         onSubmit={handleLogin}
-        className="bg-white p-6 rounded-lg shadow-md w-80"
+        className="p-6 bg-white rounded-lg shadow-md w-80"
       >
-        <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
+        <h2 className="mb-4 text-2xl font-bold text-center">Login</h2>
 
-        {error && <p className="text-red-500 mb-2">{error}</p>}
+        {error && <p className="mb-2 text-red-500">{error}</p>}
 
         <input
           type="text"
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          className="w-full mb-3 px-3 py-2 border rounded focus:outline-none"
+          className="w-full px-3 py-2 mb-3 border rounded focus:outline-none"
         />
 
         <input
@@ -61,15 +61,21 @@ export default function Login({ setCurrentUser }) {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full mb-3 px-3 py-2 border rounded focus:outline-none"
+          className="w-full px-3 py-2 mb-3 border rounded focus:outline-none"
         />
 
         <button
           type="submit"
-          className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded"
+          className="w-full py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
         >
           Login
         </button>
+          <p className="mt-3 text-sm text-center">
+          Are you a new user?{' '}
+          <a href="/register" className="text-blue-500 hover:underline">
+            Register
+          </a>
+        </p>
       </form>
     </div>
   );

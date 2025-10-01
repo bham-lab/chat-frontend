@@ -18,7 +18,7 @@ export default function ChatWindow({ currentUser, chatUser }) {
     try {
       const token = localStorage.getItem("access_token");
       const res = await fetch(
-        `http://localhost:8000/api/messages/?chat_with=${chatUser.id}`,
+     `${import.meta.env.VITE_API_URL}/api/messages/?chat_with=${chatUser.id}`,
         {
           method: "GET",
           headers: {
@@ -35,6 +35,7 @@ export default function ChatWindow({ currentUser, chatUser }) {
 
       const data = await res.json();
       setMessages(data);
+      console.log("Fetched messages:", data);
       scrollToBottom();
     } catch (err) {
       console.error("Error fetching messages:", err);
@@ -48,7 +49,7 @@ export default function ChatWindow({ currentUser, chatUser }) {
     try {
       const token = localStorage.getItem("access_token")?.replace(/"/g, "");
       
-      const res = await fetch("http://localhost:8000/api/messages/", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/messages/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -84,11 +85,11 @@ export default function ChatWindow({ currentUser, chatUser }) {
     <div className="flex flex-col h-screen bg-gray-50">
       {/* Header */}
       <div className="flex items-center justify-between p-4 bg-white border-b shadow-sm">
-        <h2 className="font-semibold text-lg">{chatUser.username}</h2>
+        <h2 className="text-lg font-semibold">{chatUser.username}</h2>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-3">
+      <div className="flex-1 p-4 space-y-3 overflow-y-auto">
         {messages.map((msg) => (
           <Message key={msg.id} message={msg} currentUser={currentUser} />
         ))}
@@ -96,18 +97,18 @@ export default function ChatWindow({ currentUser, chatUser }) {
       </div>
 
       {/* Input */}
-      <div className="fixed bottom-0 left-0 w-full bg-white p-3 border-t flex items-center">
-        <div className="flex-1 relative">
+      <div className="fixed bottom-0 left-0 flex items-center w-full p-3 bg-white border-t">
+        <div className="relative flex-1">
           <input
             type="text"
-            className="w-full border rounded-full px-4 py-2 pr-12 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 pr-12 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && sendMessage()}
             placeholder={`Message ${chatUser.username}...`}
           />
           <button
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 text-blue-500 hover:text-blue-600 disabled:text-gray-400"
+            className="absolute text-blue-500 transform -translate-y-1/2 right-2 top-1/2 hover:text-blue-600 disabled:text-gray-400"
             onClick={sendMessage}
             disabled={!input.trim()}
           >

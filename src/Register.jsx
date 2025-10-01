@@ -15,7 +15,7 @@ export default function Register() {
   }
 
   try {
-    const res = await fetch('http://localhost:8000/api/auth/register/', {
+    const res = await fetch('https://chat-backend-6f9b.onrender.com/api/auth/register/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -44,18 +44,18 @@ export default function Register() {
     <div className="flex items-center justify-center h-screen bg-gray-100">
       <form
         onSubmit={handleRegister}
-        className="bg-white shadow-lg rounded-xl p-6 w-full max-w-sm"
+        className="w-full max-w-sm p-6 bg-white shadow-lg rounded-xl"
       >
-        <h2 className="text-2xl font-bold mb-4 text-center">Register</h2>
+        <h2 className="mb-4 text-2xl font-bold text-center">Register</h2>
 
-        {message && <p className="text-sm text-red-500 mb-2">{message}</p>}
+        {message && <p className="mb-2 text-sm text-red-500">{message}</p>}
 
         <input
           type="text"
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          className="w-full mb-3 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
+          className="w-full px-4 py-2 mb-3 border rounded-lg focus:ring-2 focus:ring-blue-400"
         />
 
         <input
@@ -63,7 +63,7 @@ export default function Register() {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full mb-3 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
+          className="w-full px-4 py-2 mb-3 border rounded-lg focus:ring-2 focus:ring-blue-400"
         />
 
         <input
@@ -71,17 +71,17 @@ export default function Register() {
           placeholder="Confirm Password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          className="w-full mb-3 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
+          className="w-full px-4 py-2 mb-3 border rounded-lg focus:ring-2 focus:ring-blue-400"
         />
 
         <button
           type="submit"
-          className="w-full bg-green-500 text-white font-semibold py-2 rounded-lg hover:bg-green-600 transition"
+          className="w-full py-2 font-semibold text-white transition bg-green-500 rounded-lg hover:bg-green-600"
         >
           Register
         </button>
 
-        <p className="text-sm mt-3 text-center">
+        <p className="mt-3 text-sm text-center">
           Already have an account?{' '}
           <a href="/login" className="text-blue-500 hover:underline">
             Login

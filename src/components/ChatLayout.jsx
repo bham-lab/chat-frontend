@@ -8,9 +8,12 @@ export default function ChatLayout({ currentUser }) {
   const [showSidebar, setShowSidebar] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/users/')
+     fetch(`${import.meta.env.VITE_API_URL}/api/users/`)
       .then(res => res.json())
-      .then(data => setUsers(data))
+      .then(data => {
+         const filtered = data.filter((u) => u.id !== currentUser.id);
+        setUsers(filtered);
+      })
       .catch(err => console.error(err));
   }, []);
 
@@ -25,17 +28,17 @@ export default function ChatLayout({ currentUser }) {
   };
 
   return (
-    <div className="flex flex-col md:flex-row h-screen">
+    <div className="flex flex-col h-screen md:flex-row">
       {(showSidebar || !chatUser || window.innerWidth >= 768) && (
-        <div className="md:w-1/4 w-full border-b md:border-b-0 md:border-r border-gray-300">
+        <div className="w-full border-b border-gray-300 md:w-1/4 md:border-b-0 md:border-r">
           <UserList users={users} selectedUser={chatUser} onSelectUser={handleSelectUser} />
         </div>
       )}
 
       {chatUser && (
         <div className="flex-1 w-full">
-          <div className="md:hidden p-2 bg-gray-100 border-b">
-            <button onClick={handleBack} className="px-3 py-1 bg-blue-500 text-white rounded">
+          <div className="p-2 bg-gray-100 border-b md:hidden">
+            <button onClick={handleBack} className="px-3 py-1 text-white bg-blue-500 rounded">
               ← Back
             </button>
           </div>
